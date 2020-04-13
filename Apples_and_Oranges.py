@@ -1,21 +1,14 @@
-s, t = 7, 11
-a, b = 5, 15
-m, n = 3, 2
-da = [-2, 2, 1]
-do = [5, -6]
+string = 'TestCaseTestCase'
+sub_string = 'CaseT'
 
-a_count = 0
-o_count = 0
+counter = 0
+for v in range(len(string)):
+    if string[v] == sub_string[0]:
+        for i in range(1, len(sub_string)):
+            if string[v+1]:
+                if string[v+1] == sub_string[i]:
+                    counter += 1
+            else:
+                pass
 
-for d in da:
-    if a + d in range(s, t+1):
-        a_count += 1
-
-for d in do:
-    if b + d in range(s, t+1):
-        o_count += 1
-
-print(a_count)
-print(o_count)
-
-
+print(counter)
