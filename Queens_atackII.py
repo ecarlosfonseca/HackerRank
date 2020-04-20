@@ -1,6 +1,63 @@
-"""
-Determine all the positions the queen may atack
-There are obstacles
+def queensAtackII(n, k, r_q, c_q, obstacles):
+
+    # Returns possible positions for the queens next move, given the Queens position(r_q, c_q), the size of the borad
+    # (n x n) and an array with positions for obstacles
+
+    #  Determining number of general possible positions:
+    if n != c_q and n != r_q and c_q != 1 and r_q != 1:
+        n_houses_no_obs = n - r_q + r_q - 1 + n - c_q + c_q - 1 + min((n-c_q), (n-r_q)) + min((r_q-1), (c_q-1)) + min((n-c_q), (r_q-1)) + min((n-r_q), (c_q-1))
+    # Special cases:
+    #  Right wall
+    elif n == c_q and n != r_q and r_q != 1:
+        n_houses_no_obs = n - r_q + r_q - 1 + n - c_q + c_q - 1 + min((r_q-1), (c_q-1)) + min((n-r_q), (c_q-1))
+    #  Bot wall
+    elif n != c_q and r_q == 1 and c_q != 1:
+        n_houses_no_obs = n - r_q + r_q - 1 + n - c_q + c_q - 1 + min((n-c_q), (n-r_q)) + min((n-r_q), (c_q-1))
+    #  Top Right
+    elif n == c_q and n == r_q:
+        n_houses_no_obs = n - r_q + r_q - 1 + n - c_q + c_q - 1 + min((r_q-1), (c_q-1))
+    #  Left wall
+    elif n != r_q and 1 != r_q and c_q == 1:
+        n_houses_no_obs = n - r_q + r_q - 1 + n - c_q + c_q - + min((n-c_q), (r_q-1)) + min((n-c_q), (n-r_q))
+    #  Top wall
+    elif r_q == n and c_q != n and c_q != 1:
+        n_houses_no_obs = n - r_q + r_q - 1 + n - c_q + c_q - 1 + min((r_q-1), (c_q-1)) + min((n-c_q), (r_q-1))
+    #  Bot Left
+    elif c_q == 1 and r_q == 1:
+        n_houses_no_obs = n - r_q + r_q - 1 + n - c_q + c_q - 1 + min((n-c_q), (n-r_q))
+    #  Top Left
+    elif c_q == 1 and r_q == n:
+        n_houses_no_obs = n - r_q + r_q - 1 + n - c_q + c_q - 1 + min((n-c_q), (r_q-1))
+    #  Bot Right
+    elif c_q == n and r_q == 1:
+        n_houses_no_obs = n - r_q + r_q - 1 + n - c_q + c_q - 1 + min((c_q-1), (n-r_q))
+
+    # Subtracting the houses with and behind obstacles
+    for v in obstacles:
+        if v[0] - r_q != 0 and v[1] - c_q == 0:
+            if v[0] > r_q:
+                n_houses_no_obs -= (n-v[0]+1)
+            elif v[0] < r_q:
+                n_houses_no_obs -= v[0]
+        elif v[0] - r_q == 0 and v[1] - c_q != 0:
+            if v[1] > c_q:
+                n_houses_no_obs -= (n-v[1]+1)
+            elif v[1] < c_q:
+                n_houses_no_obs -= v[1]
+        elif abs(v[0] - r_q) == abs(v[1] - c_q):
+            n_houses_no_obs -= min(v[0], v[1])
+
+    return min((n-c_q), (n-r_q)),  min((r_q-1), (c_q-1)), min((n-c_q), (c_q-1)), min((n-r_q), (r_q-1)), n_houses_no_obs
+
+
+if __name__ == '__main__':
+    size = 8
+    n_obs = 0
+    l_q = 5
+    co_q = 4
+    obs = []
+    print(queensAtackII(size, n_obs, l_q, co_q, obs))
+
 """
 n = 5
 k = 3
@@ -65,45 +122,5 @@ for obstacle in obstacles:
 spaces = (obst_n[0]-r_q) + (obst_nw[0]-r_q) + (c_q - obst_w[1]) + (r_q - obst_sw[0]) + (r_q - obst_s[0]) + (r_q - obst_se[0]) + (obst_e[1] - c_q) + (obst_ne[0]-r_q) - 8
 
 print(spaces)
-
-"""
-directions = [[1, 0], [0, 1], [1, 1], [-1, 0], [0, -1], [-1, -1], [1, -1], [-1, 1]]
-positions = []
-r_obstacles = []
-
-for v in obstacles:
-    dir_o_r = v[0] - r_q
-    dir_o_c = v[1] - c_q
-
-    for d in directions:
-
-        div = dir_o_r[0]/d[0] if d[0] else 1
-
-        for w in zip(dir_o_r[1:], d[1:]):
-            if v[0] != div * v[1]:
-                pass
-        else:
-            r_obstacles.append([dir_o_r, dir_o_c])
-        #if d[0] != 0 and d[1] != 0:
-        #if isinstance(dir_o_r/d[0], int) and isinstance(dir_o_c/d[1], int):
-        # r_obstacles.append([dir_o_r, dir_o_c])
-        #elif d[0] == 0 and d[1] != 0:
-        # if isinstance(dir_o_c/d[1], int):
-        #  r_obstacles.append([dir_o_r, dir_o_c])
-        #elif d[0] != 0 and d[1] == 0:
-        # if isinstance(dir_o_r/d[0], int):
-#   r_obstacles.append([dir_o_r, dir_o_c])
-
-for i in range(1, n):
-    for j in range(len(directions)):
-        if r_q + i*directions[j][0] > 0 and r_q + i*directions[j][0] <= n and c_q + i*directions[j][1] > 0 and c_q + i*directions[j][1] <= n:
-            positions.append([r_q + i*directions[j][0], c_q + i*directions[j][1]])
-
-for valores in r_obstacles:
-    for l in positions:
-        if isinstance(valores[0]/l[0], int) and isinstance(valores[1]/l[1], int):
-            positions.remove(l)
-print(r_obstacles)
-#print(len(positions))
 
 """

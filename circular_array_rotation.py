@@ -1,8 +1,6 @@
 def circularArrayRotation(a, k, queries):
 
-    rotated_a = a[len(a) - k: len(a) + 1]
-    for v in range(len(a) - k):
-        rotated_a.append(a[v])
+    rotated_a = a[-(k % len(a)):] + a[:-(k % len(a))]
 
     return rotated_a[queries]
 
