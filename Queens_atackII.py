@@ -51,9 +51,9 @@ def queensAtackII(n, k, r_q, c_q, obstacles):
 
 
 if __name__ == '__main__':
-    size = 8
+    size = 4
     n_obs = 0
-    l_q = 5
+    l_q = 4
     co_q = 4
     obs = []
     print(queensAtackII(size, n_obs, l_q, co_q, obs))
