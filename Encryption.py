@@ -4,12 +4,11 @@ import math
 def encryption(s):
 
     s = s.replace(' ', '')
-    n = math.sqrt(len(s))
 
-    if isinstance(n, int):
-        width = int(math.sqrt(len(s))) + 1
+    if math.sqrt(len(s)).is_integer():
+        width = math.floor(math.sqrt(len(s)))
     else:
-        width = int(math.sqrt(len(s)))
+        width = math.ceil(math.sqrt(len(s)))
 
     result = ''
     for i in range(width):
@@ -19,7 +18,7 @@ def encryption(s):
             if len(aux) == width or v >= len(s) - width:
                 result += aux + ' '
 
-    return result[:-1]
+    return result
 
 
 
