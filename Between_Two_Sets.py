@@ -1,4 +1,8 @@
 def between_two_sets(a, b):
+
+    # Given two arrays a and b, it returns the count of numbers in between the two arrays are multiple os the elements
+    # of the first array and divisors of the second array
+
     x = a[-1]
     y = b[0]
     b_div = []

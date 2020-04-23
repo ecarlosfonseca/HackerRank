@@ -3,6 +3,8 @@ import math
 
 def encryption(s):
 
+    # Encrypts a message transforming lines into given number os columns
+
     s = s.replace(' ', '')
 
     if math.sqrt(len(s)).is_integer():

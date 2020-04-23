@@ -1,4 +1,5 @@
 def counting_valleys(s):
+
     level = 0
     valleys = 0
     for i in s:
