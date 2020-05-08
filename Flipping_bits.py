@@ -1,14 +1,9 @@
 def flippingBits(n):
 
-    bin_n = bin(n)
+    # Returns decimal flipped 32 bit binary of decimal n
 
-    # adding left zeros so we have 32bit binary
-    if len(str(bin_n)) < 32:
-        bin_32_n = (32 - len(str(bin_n))) * '0' + str(bin_n).replace('b', '0')
-    elif len(str(bin_n)) == 32:
-        bin_32_n = str(bin_n).replace('b', '0')
-    elif len(str(bin_n)) > 32:
-        bin_32_n = str(bin_n).replace('0b', '')
+    bin_n = str(bin(n))
+    bin_32_n = bin_n[2:].zfill(32)
 
     # flipping binary digits
     f_bin_32_n = ''
@@ -18,18 +13,18 @@ def flippingBits(n):
         elif v == '1':
             f_bin_32_n += '0'
 
-    return bin_32_n# int(f_bin_32_n, 2)
+    return int(f_bin_32_n,2)
 
 if __name__ == '__main__':
-    #fptr = open(os.environ['OUTPUT_PATH'], 'w')
+    fptr = open(os.environ['OUTPUT_PATH'], 'w')
 
-    #  q = int(input())
+    q = int(input())
 
-    #for q_itr in range(q):
-    n = 4294967295
+    for q_itr in range(q):
+        n = int(input())
 
-    print(flippingBits(n))
+        result = flippingBits(n)
 
-    #fptr.write(str(result) + '\n')
+        fptr.write(str(result) + '\n')
 
-    #fptr.close()
+    fptr.close()
